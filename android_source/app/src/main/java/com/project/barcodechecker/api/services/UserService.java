@@ -7,6 +7,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -25,4 +27,8 @@ public interface UserService {
     Call<User> register(@Body User user);
     @PUT("/api/users/{id}")
     Call<User> update(@Path("id") int id, @Body User user);
+    @FormUrlEncoded
+     @POST("/api/users/updatepwd")
+    Call<User> updatePassword(@Field("id") int id, @Field("password") String password);
+
 }
