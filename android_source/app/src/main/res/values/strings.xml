@@ -3,11 +3,11 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="item_history">History</string>
-    <string name="item_search">Search</string>
-    <string name="item_camera">Scan</string>
-    <string name="item_list">List</string>
-    <string name="item_user">User</string>
+    <string name="item_history">Lịch sử</string>
+    <string name="item_search">Tìm kiếm</string>
+    <string name="item_camera">Quét mã</string>
+    <string name="item_list">Danh mục</string>
+    <string name="item_user">Tài khoản</string>
     <string name="scanner_activity">ZXing Scanner - Full Activity</string>
     <string name="scanner_fragment_activity">ZXing Scanner - Full Fragment Activity</string>
     <string name="simple_scanner_activity">ZXing Scanner - Simple Activity</string>
@@ -30,8 +30,8 @@
     <string name="formats">Formats</string>
     <string name="choose_formats">Choose Formats</string>
     <string name="select_camera">Select a Camera</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Cancel</string>
+    <string name="ok_button">Đồng ý</string>
+    <string name="cancel_button">Hủy</string>
     <bool name="cameraPreviewShouldFillView">true</bool>
 
     <string name="lbl_code">Mã sản phẩm:</string>
@@ -55,14 +55,14 @@
 
 
     <!--History-->
-    <string name="string_not_fount">Not Found</string>
-    <string name="not_found_product_dialog_title">Message</string>
-    <string name="not_found_product_dialog_message">Product Not Found</string>
+    <string name="string_not_fount">Không tìm thấy</string>
+    <string name="not_found_product_dialog_title">Tin nhắn</string>
+    <string name="not_found_product_dialog_message">Không tìm thấy sản phẩm</string>
     <string name="not_found_product_dialog_tag">not_foud_dialog</string>
-    <string name="delete_history_dialog_title">Delete</string>
-    <string name="delete_history_dialog_message">Are you sure to delete this history?</string>
+    <string name="delete_history_dialog_title">Xóa</string>
+    <string name="delete_history_dialog_message">Bạn có chắc là muốn xóa sản phẩm này?</string>
     <string name="delete_history_dialog_tag">confirm_delete</string>
-    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_user">Trang người dùng</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -153,6 +153,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_accout">AccoutActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Cài đặt</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>

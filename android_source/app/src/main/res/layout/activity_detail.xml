@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -161,7 +160,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="@integer/right_side_detail_atv"
-                            android:text="rating" />
+                            android:text="lien he" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -187,12 +186,14 @@
 
                             <RatingBar
                                 android:id="@+id/rbar_star"
-                                style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                                style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:backgroundTint="@color/colorSecondary"
+                                android:backgroundTint="@color/color_yellow_500"
                                 android:isIndicator="false"
-                                android:numStars="5" />
+                                android:numStars="5"
+                                />
+
                         </LinearLayout>
                     </LinearLayout>
 
@@ -245,7 +246,9 @@
                     <FrameLayout
                         android:id="@+id/frm_comment_detail_atv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"/>
                 </LinearLayout>
             </RelativeLayout>
 

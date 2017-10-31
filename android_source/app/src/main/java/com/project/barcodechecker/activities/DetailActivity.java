@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -19,9 +20,11 @@ import com.project.barcodechecker.R;
 import com.project.barcodechecker.api.APIServiceManager;
 import com.project.barcodechecker.api.services.CommentService;
 import com.project.barcodechecker.api.services.ProductService;
+import com.project.barcodechecker.api.services.RatingService;
 import com.project.barcodechecker.fragments.CommentFragment;
 import com.project.barcodechecker.models.Comment;
 import com.project.barcodechecker.models.Product;
+import com.project.barcodechecker.models.Rating;
 import com.project.barcodechecker.models.User;
 import com.project.barcodechecker.utils.AppConst;
 import com.project.barcodechecker.utils.CoreManager;
@@ -103,6 +106,96 @@ public class DetailActivity extends BaseActivity implements CommentFragment.Butt
         txtDescription.setText(p.getDescription());
         txtContact.setText(p.getPhone());
         rbStar.setRating((float) p.getAverageRating());
+        final User u = CoreManager.getUser(DetailActivity.this);
+        if (u != null) {
+            if (u.getRatingList() == null) {
+            }
+            if (u.getRatingList() != null) {
+                if (getRating(u) != null) {
+
+                }
+            }
+        }
+        rbStar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if(fromUser){
+                  Log.e("ERROR", "UP");
+                if (u == null) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(DetailActivity.this);
+                    dialog.setMessage("Bạn cần phải đăng nhập để đánh giá sản phẩm này!")
+                            .setPositiveButton("Đăng nhập", positiveListener)
+                            .setNegativeButton("Hủy", null)
+                            .show();
+                } else {
+                    Rating rate = getRating(u);
+                    if (rate != null) {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(DetailActivity.this);
+                        dialog.setMessage("Bạn đã đánh giá sản phẩm này " + rate.getRating() + " sao.");
+                        dialog.setPositiveButton("OK", null);
+                        dialog.show();
+                        rbStar.setRating((float) product.getAverageRating());
+                    } else {
+                        rate = new Rating();
+                        rate.setProductID(product.getId());
+                        rate.setUserID(u.getId());
+                        rate.setRating(rating);
+                        logError(DetailActivity.class.getSimpleName(), "setValues", "Tét rating" + rate.getRating() + " rating" +
+                                "proID: " + rate.getProductID() + " userid " + rate.getUserID());
+                        RatingService ratingService = APIServiceManager.getRatingService();
+                        showLoading();
+                        ratingService.postRating(rate).enqueue(new Callback<Rating>() {
+                            @Override
+                            public void onResponse(Call<Rating> call, Response<Rating> response) {
+                                if (response.isSuccessful()) {
+//                                    logError(DetailActivity.class.getSimpleName(), "setValues", "Post rating success" + response.body().getRating() + " rating" +
+//                                            "proID: " + response.body().getProductID() + " userid " + response.body().getUserID());
+                                    u.getRatingList().add(response.body());
+                                    CoreManager.setUser(DetailActivity.this, u);
+//                                    rbStar.setIsIndicator(true);
+                                    showMessage("Đánh giá sản phẩm thành công.");
+                                } else {
+                                    logError(DetailActivity.class.getSimpleName(), "setValues", "Post rating onResponse but else" + response.code());
+                                }
+                                hideLoading();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Rating> call, Throwable t) {
+                                logError(DetailActivity.class.getSimpleName(), "setValues", "OnFailure " + t.getMessage());
+                                hideLoading();
+                            }
+                        });
+                    }
+                }
+                //kiem tra user null
+                //bat nguoi ta dang nhap de rating
+                //user khong null
+                //kiem tra user da rating chua
+
+                //user chua rating
+            }
+        }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private Rating getRating(User user) {
+        List<Rating> list = user.getRatingList();
+        if (list == null) {
+            return null;
+        }
+        for (Rating r : list) {
+            if (r.getProductID() == product.getId()) {
+                return r;
+            }
+        }
+        return null;
+
     }
 
     private void loadComments(Product product) {
@@ -146,7 +239,7 @@ public class DetailActivity extends BaseActivity implements CommentFragment.Butt
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setMessage("Bạn cần phải đăng nhập để bình luận!")
                     .setPositiveButton("Đăng nhập", positiveListener)
-                    .setNegativeButton("Thôi kệ lười đăng nhập lắm", null)
+                    .setNegativeButton("Hủy", null)
                     .show();
         } else {
             Date date = Calendar.getInstance().getTime();
